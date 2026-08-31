@@ -1,0 +1,34 @@
+# =====================================================================
+#  AuroraShop — category definitions
+#  Each item in prices.yml declares which category id it belongs to.
+#  "icon" is any valid Material name. Order here is the display order.
+# =====================================================================
+
+categories:
+  - id: blocks
+    display: "<white>Blocks"
+    icon: BRICKS
+
+  - id: ores
+    display: "<white>Ores & Minerals"
+    icon: DIAMOND_ORE
+
+  - id: farming
+    display: "<white>Farming"
+    icon: WHEAT
+
+  - id: mobdrops
+    display: "<white>Mob Drops"
+    icon: BONE
+
+  - id: food
+    display: "<white>Food"
+    icon: COOKED_BEEF
+
+  - id: redstone
+    display: "<white>Redstone & Utility"
+    icon: REDSTONE
+
+  - id: netherend
+    display: "<white>Nether & End"
+    icon: CHORUS_FRUIT

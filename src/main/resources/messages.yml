@@ -1,0 +1,58 @@
+# =====================================================================
+#  AuroraShop — player-facing messages
+#  All values use MiniMessage formatting: <gold>, <gray>, <bold>, etc.
+#  Placeholders are written as {like_this} and are substituted per message.
+# =====================================================================
+
+prefix: "<dark_gray>[<gold><bold>Aurora</bold>Shop<dark_gray>]<gray> "
+
+general:
+  no-permission: "<red>You don't have permission to do that."
+  player-only: "<red>Only players can do that."
+  reloaded: "<green>Configuration reloaded ({items} items, {categories} categories)."
+  unknown-command: "<red>Unknown command. Try <yellow>/shop<red>, <yellow>/sellall<red>, or <yellow>/sellhand<red>."
+
+shop:
+  opened-main: "" # intentionally silent — the GUI is the feedback
+  unknown-category: "<red>Unknown category '<yellow>{category}<red>'."
+  no-search-term: "<red>Usage: /shop search <query>"
+  no-results: "<red>No items match '<yellow>{query}<red>'."
+  search-prompt: "<yellow>Type <white>/shop search <query><yellow> to search for an item."
+
+transaction:
+  bought: "<green>Bought <white>{amount}x {item}<green> for <gold>{price}<green>."
+  sold: "<green>Sold <white>{amount}x {item}<green> for <gold>{price}<green>."
+  sold-nothing: "<red>You don't have any sellable {item}."
+  sold-all-summary: "<green>Sold <white>{count}<green> item type(s) for a total of <gold>{price}<green>."
+  sold-all-nothing: "<red>You have nothing sellable in your inventory."
+  insufficient-funds: "<red>You need <gold>{price}<red> but only have <gold>{balance}<red>."
+  insufficient-items: "<red>You only have <white>{have}<red>, not <white>{amount}<red>."
+  inventory-full: "<red>Your inventory doesn't have room for {amount}x {item}."
+  out-of-stock: "<red>{item} is out of stock ({remaining} remaining)."
+  buy-disabled: "<red>{item} cannot be bought."
+  sell-disabled: "<red>{item} cannot be sold."
+  daily-limit-buy: "<red>You've reached the daily purchase limit for {item} ({used}/{limit})."
+  daily-limit-sell: "<red>You've reached the daily sell limit for {item} ({used}/{limit})."
+  invalid-quantity: "<red>Invalid quantity."
+  too-large: "<red>That quantity is larger than the maximum allowed per transaction ({max})."
+  already-processing: "<red>Please wait — your last transaction is still processing."
+  rate-limited: "<red>You're clicking too fast — slow down a little."
+  not-vanilla: "<red>Only unmodified items can be sold (no custom name, enchants, or NBT)."
+  economy-error: "<red>A payment error occurred. Nothing was charged or given."
+  config-error: "<red>This item is currently misconfigured — an admin has been notified."
+  confirm-title: "<gold>Confirm: {action} {amount}x {item} for {price}?"
+  confirmed: "<green>Confirmed."
+  cancelled: "<yellow>Transaction cancelled."
+
+admin:
+  reload-usage: "<yellow>/shopadmin reload"
+  stats-header: "<gold><bold>AuroraShop Statistics"
+  stats-item-not-found: "<red>No statistics for '<yellow>{item}<red>'."
+  givebalance-usage: "<yellow>/shopadmin givebalance <player> <amount>"
+  givebalance-success: "<green>Gave <gold>{amount}<green> to <white>{player}<green>."
+  givebalance-failed: "<red>Failed to give balance: {reason}"
+  player-not-found: "<red>Player '<yellow>{player}<red>' not found."
+  audit-usage: "<yellow>/shopadmin audit <item>"
+  audit-not-found: "<red>No item with id '<yellow>{item}<red>'."
+  validate-none: "<green>No pricing problems detected across {count} items."
+  validate-found: "<red>Found {count} pricing problem(s) — see console for details."

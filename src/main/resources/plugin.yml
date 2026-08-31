@@ -1,0 +1,56 @@
+name: AuroraShop
+version: '${version}'
+main: com.aurorashop.AuroraShopPlugin
+api-version: '26.2'
+author: AuroraShop
+description: A secure, balanced, premium vanilla-item GUI shop and economy plugin.
+website: https://example.invalid/aurorashop
+
+# Best-effort Folia support: all region-crossing work is dispatched through
+# Paper's global/async/entity schedulers rather than the legacy BukkitScheduler.
+folia-supported: true
+
+load: POSTWORLD
+depend: [Vault]
+softdepend: [PlaceholderAPI, Essentials, EconomyGUI]
+
+commands:
+  shop:
+    description: Open the AuroraShop GUI, jump to a category, or search.
+    usage: /shop [category|search <query>]
+    permission: aurorashop.shop
+    permission-message: You do not have permission to use the shop.
+  sellall:
+    description: Sell every sellable item in your inventory.
+    usage: /sellall
+    permission: aurorashop.sell
+    permission-message: You do not have permission to sell items.
+  sellhand:
+    description: Sell the item currently in your main hand.
+    usage: /sellhand
+    permission: aurorashop.sell
+    permission-message: You do not have permission to sell items.
+  sellinventory:
+    description: Alias for /sellall.
+    usage: /sellinventory
+    permission: aurorashop.sell
+    permission-message: You do not have permission to sell items.
+  shopadmin:
+    description: AuroraShop administration and diagnostics.
+    usage: /shopadmin <reload|stats|givebalance|audit|validateprices>
+    permission: aurorashop.admin
+    permission-message: You do not have permission to administer the shop.
+
+permissions:
+  aurorashop.shop:
+    description: Allows opening the shop GUI and buying items.
+    default: true
+  aurorashop.sell:
+    description: Allows selling items via commands and the GUI.
+    default: true
+  aurorashop.admin:
+    description: Allows all AuroraShop administration commands.
+    default: op
+  aurorashop.bypasslimits:
+    description: Bypasses stock limits and daily purchase/sale limits.
+    default: op

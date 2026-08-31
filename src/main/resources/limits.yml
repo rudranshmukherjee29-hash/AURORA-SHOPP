@@ -1,0 +1,26 @@
+# =====================================================================
+#  AuroraShop — stock & limit defaults
+#
+#  Per-item stock/dailyBuyLimit/dailySellLimit overrides live inline in
+#  prices.yml next to the item they apply to (most items define none,
+#  which means unlimited — that is intentional, see section 7 of the
+#  design brief: only a handful of rare items should ever be limited).
+#
+#  This file only controls the *behaviour* around those limits.
+# =====================================================================
+
+# Players with aurorashop.bypasslimits skip all stock and daily-limit checks.
+bypassPermission: aurorashop.bypasslimits
+
+# Daily limits reset at this hour, server local time (0-23).
+dailyResetHour: 0
+
+restock:
+  # Global switch for the automatic restock task. Individual items still
+  # need "restock.automatic: true" in prices.yml to be included.
+  enabled: true
+
+  # If true, automatic restock sets stock back to the item's configured
+  # maximum. If false, it adds "restock.amount" (from the item's own
+  # config) up to the maximum instead of an instant refill.
+  refillToMax: true
