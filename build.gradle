@@ -51,11 +51,17 @@ shadowJar {
     archiveBaseName.set('AuroraShop')
 
     // Relocate every shaded library into our own namespace. This is mandatory:
-    // without it, two plugins bundling different HikariCP/SQLite versions on the
+    // without it, two plugins bundling different HikariCP/MariaDB versions on the
     // same server WILL classload the wrong one and crash in ways that are very
     // hard to diagnose.
+    //
+    // sqlite-jdbc is deliberately NOT relocated: its native loader (NativeDB /
+    // SQLiteJDBCLoader) resolves its bundled .so/.dll/.dylib via a hardcoded
+    // resource path under org/sqlite/native/**, which Shadow's relocator does not
+    // rewrite. Relocating the org.sqlite package moves the Java classes but not
+    // the native-library lookup path, so the native symbols never link and the
+    // plugin fails with UnsatisfiedLinkError on NativeDB._open_utf8.
     relocate 'com.zaxxer.hikari', 'com.aurorashop.libs.hikari'
-    relocate 'org.sqlite', 'com.aurorashop.libs.sqlite'
     relocate 'org.mariadb.jdbc', 'com.aurorashop.libs.mariadb'
     relocate 'org.mariadb', 'com.aurorashop.libs.mariadborg'
 
