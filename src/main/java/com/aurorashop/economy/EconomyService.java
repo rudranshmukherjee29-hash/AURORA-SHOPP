@@ -108,9 +108,16 @@ public final class EconomyService {
 
     public String format(BigDecimal amount) {
         try {
-            return economy.format(amount.doubleValue());
+            String formatted = economy.format(amount.doubleValue());
+            if (formatted == null || formatted.isBlank()) {
+                plugin.getLogger().warning("Economy provider '" + economy.getName()
+                        + "' returned a blank formatted amount — falling back to AuroraShop's own "
+                        + "formatting. Check your economy plugin's currency-format configuration.");
+                return com.aurorashop.util.TextUtil.money(amount);
+            }
+            return formatted;
         } catch (Exception e) {
-            return "$" + amount.setScale(2, java.math.RoundingMode.HALF_UP);
+            return com.aurorashop.util.TextUtil.money(amount);
         }
     }
 }
