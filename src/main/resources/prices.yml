@@ -4,6 +4,15 @@
 #  This is a CURATED list (not every vanilla item) — see README.md,
 #  "Economy Balancing", for the full rationale behind every price.
 #
+#  Pricing policy:
+#    - "Easily available" categories (blocks, farming, mobdrops, food,
+#      redstone) use a fixed buy:sell ratio of 5:1 — buy = sell x 5.
+#      This keeps grinding always more profitable than buying-to-resell,
+#      while still letting players buy convenience items with coin.
+#    - Top-tier rare items (netherite, diamond, emerald, nether star,
+#      shulker shell) are SELL-ONLY: buyEnabled: false. These are meant
+#      to come from actual mining/looting, never from the shop.
+#
 #  Every "conversions" entry below is used by PriceValidator at startup
 #  and by /shopadmin validateprices to detect buy→convert→sell profit
 #  loops. Three relationship kinds are supported:
@@ -23,53 +32,56 @@
 #        recipes have no vanilla "uncraft" reverse).
 #
 #  Any component referenced by id must exist elsewhere in this file.
+#  NOTE: for sell-only items (buyEnabled: false), "buy" is still set
+#  to sell x 5 for reference/consistency, but it is never charged to
+#  players since the buy side is disabled.
 # =====================================================================
 
 items:
 
   # ---------------------------------------------------------------
-  # BLOCKS
+  # BLOCKS  (5:1 buy:sell)
   # ---------------------------------------------------------------
   - id: dirt
     material: DIRT
     category: blocks
     displayName: "Dirt"
-    buy: 1.0
+    buy: 0.25
     sell: 0.05
 
   - id: cobblestone
     material: COBBLESTONE
     category: blocks
     displayName: "Cobblestone"
-    buy: 1.0
+    buy: 0.25
     sell: 0.05
 
   - id: stone
     material: STONE
     category: blocks
     displayName: "Stone"
-    buy: 2.0
+    buy: 1.5
     sell: 0.3
 
   - id: sand
     material: SAND
     category: blocks
     displayName: "Sand"
-    buy: 2.0
+    buy: 0.5
     sell: 0.1
 
   - id: gravel
     material: GRAVEL
     category: blocks
     displayName: "Gravel"
-    buy: 2.0
+    buy: 0.5
     sell: 0.1
 
   - id: glass
     material: GLASS
     category: blocks
     displayName: "Glass"
-    buy: 6.0
+    buy: 5.0
     sell: 1.0
     conversions:
       smeltsFrom: sand
@@ -78,14 +90,14 @@ items:
     material: CLAY_BALL
     category: blocks
     displayName: "Clay Ball"
-    buy: 3.0
+    buy: 4.0
     sell: 0.8
 
   - id: brick
     material: BRICK
     category: blocks
     displayName: "Brick"
-    buy: 4.0
+    buy: 5.0
     sell: 1.0
     conversions:
       smeltsFrom: clay_ball
@@ -94,14 +106,14 @@ items:
     material: OAK_LOG
     category: blocks
     displayName: "Oak Log"
-    buy: 6.0
+    buy: 7.5
     sell: 1.5
 
   - id: oak_planks
     material: OAK_PLANKS
     category: blocks
     displayName: "Oak Planks"
-    buy: 1.5
+    buy: 2.0
     sell: 0.4
     conversions:
       craftsFrom:
@@ -123,6 +135,9 @@ items:
 
   # ---------------------------------------------------------------
   # ORES & MINERALS
+  #   coal / raw iron / iron / raw copper / copper / gold / redstone /
+  #   lapis keep their existing (tighter) ratios — still buyable.
+  #   diamond, emerald, and netherite are SELL-ONLY (see below).
   # ---------------------------------------------------------------
   - id: coal
     material: COAL
@@ -234,12 +249,14 @@ items:
     buy: 55.0
     sell: 20.0
 
+  # --- SELL-ONLY: top-tier rares ---
   - id: diamond
     material: DIAMOND
     category: ores
     displayName: "Diamond"
-    buy: 55.0
+    buy: 110.0
     sell: 22.0
+    buyEnabled: false
     conversions:
       compressesInto: { item: diamond_block, ratio: 9 }
 
@@ -247,15 +264,17 @@ items:
     material: DIAMOND_BLOCK
     category: ores
     displayName: "Diamond Block"
-    buy: 430.0
+    buy: 850.0
     sell: 170.0
+    buyEnabled: false
 
   - id: emerald
     material: EMERALD
     category: ores
     displayName: "Emerald"
-    buy: 45.0
+    buy: 90.0
     sell: 18.0
+    buyEnabled: false
     conversions:
       compressesInto: { item: emerald_block, ratio: 9 }
 
@@ -263,23 +282,25 @@ items:
     material: EMERALD_BLOCK
     category: ores
     displayName: "Emerald Block"
-    buy: 350.0
+    buy: 700.0
     sell: 140.0
+    buyEnabled: false
 
   - id: netherite_scrap
     material: NETHERITE_SCRAP
     category: ores
     displayName: "Netherite Scrap"
-    buy: 220.0
+    buy: 450.0
     sell: 90.0
+    buyEnabled: false
 
   - id: netherite_ingot
     material: NETHERITE_INGOT
     category: ores
     displayName: "Netherite Ingot"
-    buy: 950.0
+    buy: 2000.0
     sell: 400.0
-    dailyBuyLimit: 4
+    buyEnabled: false
     conversions:
       craftsFrom:
         outputAmount: 1
@@ -288,76 +309,76 @@ items:
           - { item: gold_ingot, amount: 4 }
 
   # ---------------------------------------------------------------
-  # FARMING
+  # FARMING  (5:1 buy:sell)
   # ---------------------------------------------------------------
   - id: wheat
     material: WHEAT
     category: farming
     displayName: "Wheat"
-    buy: 3.0
+    buy: 6.0
     sell: 1.2
 
   - id: carrot
     material: CARROT
     category: farming
     displayName: "Carrot"
-    buy: 2.5
+    buy: 5.0
     sell: 1.0
 
   - id: potato
     material: POTATO
     category: farming
     displayName: "Potato"
-    buy: 2.5
+    buy: 5.0
     sell: 1.0
 
   - id: beetroot
     material: BEETROOT
     category: farming
     displayName: "Beetroot"
-    buy: 2.5
+    buy: 5.0
     sell: 1.0
 
   - id: melon_slice
     material: MELON_SLICE
     category: farming
     displayName: "Melon Slice"
-    buy: 2.0
+    buy: 3.5
     sell: 0.7
 
   - id: pumpkin
     material: PUMPKIN
     category: farming
     displayName: "Pumpkin"
-    buy: 4.0
+    buy: 7.5
     sell: 1.5
 
   - id: sugar_cane
     material: SUGAR_CANE
     category: farming
     displayName: "Sugar Cane"
-    buy: 3.0
+    buy: 5.0
     sell: 1.0
 
   - id: wheat_seeds
     material: WHEAT_SEEDS
     category: farming
     displayName: "Wheat Seeds"
-    buy: 1.5
+    buy: 2.5
     sell: 0.5
 
   - id: cocoa_beans
     material: COCOA_BEANS
     category: farming
     displayName: "Cocoa Beans"
-    buy: 4.0
+    buy: 7.5
     sell: 1.5
 
   - id: bread
     material: BREAD
     category: farming
     displayName: "Bread"
-    buy: 12.0
+    buy: 22.5
     sell: 4.5
     conversions:
       craftsFrom:
@@ -369,13 +390,13 @@ items:
     material: BAKED_POTATO
     category: farming
     displayName: "Baked Potato"
-    buy: 6.0
+    buy: 11.0
     sell: 2.2
     conversions:
       smeltsFrom: potato
 
   # ---------------------------------------------------------------
-  # MOB DROPS
+  # MOB DROPS  (5:1 buy:sell, except nether_star which stays buy-only as a sink)
   # ---------------------------------------------------------------
   - id: rotten_flesh
     material: ROTTEN_FLESH
@@ -388,49 +409,49 @@ items:
     material: BONE
     category: mobdrops
     displayName: "Bone"
-    buy: 3.0
+    buy: 5.0
     sell: 1.0
 
   - id: string
     material: STRING
     category: mobdrops
     displayName: "String"
-    buy: 3.0
+    buy: 5.0
     sell: 1.0
 
   - id: gunpowder
     material: GUNPOWDER
     category: mobdrops
     displayName: "Gunpowder"
-    buy: 4.0
+    buy: 7.5
     sell: 1.5
 
   - id: spider_eye
     material: SPIDER_EYE
     category: mobdrops
     displayName: "Spider Eye"
-    buy: 3.5
+    buy: 6.0
     sell: 1.2
 
   - id: leather
     material: LEATHER
     category: mobdrops
     displayName: "Leather"
-    buy: 5.0
+    buy: 10.0
     sell: 2.0
 
   - id: slime_ball
     material: SLIME_BALL
     category: mobdrops
     displayName: "Slime Ball"
-    buy: 6.0
+    buy: 11.0
     sell: 2.2
 
   - id: ender_pearl
     material: ENDER_PEARL
     category: mobdrops
     displayName: "Ender Pearl"
-    buy: 30.0
+    buy: 60.0
     sell: 12.0
     dailySellLimit: 256
 
@@ -438,7 +459,7 @@ items:
     material: BLAZE_ROD
     category: mobdrops
     displayName: "Blaze Rod"
-    buy: 35.0
+    buy: 70.0
     sell: 14.0
     dailySellLimit: 128
 
@@ -446,10 +467,12 @@ items:
     material: PHANTOM_MEMBRANE
     category: mobdrops
     displayName: "Phantom Membrane"
-    buy: 40.0
+    buy: 80.0
     sell: 16.0
     dailySellLimit: 64
 
+  # nether_star is a special buy-only money sink (not "easily available"
+  # and not for sale at all) — left as-is outside the 5:1/rare rules.
   - id: nether_star
     material: NETHER_STAR
     category: mobdrops
@@ -463,56 +486,66 @@ items:
       current: 1
       automaticRestock: false
 
+  # --- SELL-ONLY: top-tier rare ---
+  - id: shulker_shell
+    material: SHULKER_SHELL
+    category: netherend
+    displayName: "Shulker Shell"
+    buy: 375.0
+    sell: 75.0
+    buyEnabled: false
+    dailySellLimit: 16
+
   # ---------------------------------------------------------------
-  # FOOD
+  # FOOD  (5:1 buy:sell)
   # ---------------------------------------------------------------
   - id: cooked_beef
     material: COOKED_BEEF
     category: food
     displayName: "Steak"
-    buy: 6.0
+    buy: 11.0
     sell: 2.2
 
   - id: cooked_porkchop
     material: COOKED_PORKCHOP
     category: food
     displayName: "Cooked Porkchop"
-    buy: 6.0
+    buy: 11.0
     sell: 2.2
 
   - id: cooked_chicken
     material: COOKED_CHICKEN
     category: food
     displayName: "Cooked Chicken"
-    buy: 5.0
+    buy: 9.0
     sell: 1.8
 
   - id: cooked_mutton
     material: COOKED_MUTTON
     category: food
     displayName: "Cooked Mutton"
-    buy: 5.0
+    buy: 9.0
     sell: 1.8
 
   - id: egg
     material: EGG
     category: food
     displayName: "Egg"
-    buy: 2.0
+    buy: 3.0
     sell: 0.6
 
   - id: apple
     material: APPLE
     category: food
     displayName: "Apple"
-    buy: 5.0
+    buy: 9.0
     sell: 1.8
 
   - id: gold_nugget
     material: GOLD_NUGGET
     category: food
     displayName: "Gold Nugget"
-    buy: 2.2
+    buy: 4.0
     sell: 0.8
     conversions:
       compressesInto: { item: gold_ingot, ratio: 9 }
@@ -521,7 +554,7 @@ items:
     material: GOLDEN_APPLE
     category: food
     displayName: "Golden Apple"
-    buy: 25.0
+    buy: 45.0
     sell: 9.0
     conversions:
       craftsFrom:
@@ -534,7 +567,7 @@ items:
     material: SUGAR
     category: food
     displayName: "Sugar"
-    buy: 3.5
+    buy: 6.0
     sell: 1.2
     conversions:
       craftsFrom:
@@ -546,7 +579,7 @@ items:
     material: PUMPKIN_PIE
     category: food
     displayName: "Pumpkin Pie"
-    buy: 9.0
+    buy: 16.0
     sell: 3.2
     conversions:
       craftsFrom:
@@ -557,27 +590,27 @@ items:
           - { item: egg, amount: 1 }
 
   # ---------------------------------------------------------------
-  # REDSTONE & UTILITY
+  # REDSTONE & UTILITY  (5:1 buy:sell)
   # ---------------------------------------------------------------
   - id: repeater
     material: REPEATER
     category: redstone
     displayName: "Redstone Repeater"
-    buy: 18.0
+    buy: 35.0
     sell: 7.0
 
   - id: comparator
     material: COMPARATOR
     category: redstone
     displayName: "Redstone Comparator"
-    buy: 22.0
+    buy: 42.5
     sell: 8.5
 
   - id: piston
     material: PISTON
     category: redstone
     displayName: "Piston"
-    buy: 16.0
+    buy: 40.0
     sell: 8.0
     conversions:
       craftsFrom:
@@ -592,7 +625,7 @@ items:
     material: STICKY_PISTON
     category: redstone
     displayName: "Sticky Piston"
-    buy: 20.0
+    buy: 37.5
     sell: 7.5
     conversions:
       craftsFrom:
@@ -605,7 +638,7 @@ items:
     material: HOPPER
     category: redstone
     displayName: "Hopper"
-    buy: 140.0
+    buy: 275.0
     sell: 55.0
     conversions:
       craftsFrom:
@@ -618,18 +651,21 @@ items:
     material: RAIL
     category: redstone
     displayName: "Rail"
-    buy: 5.0
+    buy: 9.0
     sell: 1.8
 
   - id: powered_rail
     material: POWERED_RAIL
     category: redstone
     displayName: "Powered Rail"
-    buy: 14.0
+    buy: 25.0
     sell: 5.0
 
   # ---------------------------------------------------------------
   # NETHER & END
+  #   quartz / glowstone / magma cream / chorus fruit / blaze powder /
+  #   ender eye keep their existing (tighter) ratios — still buyable.
+  #   shulker_shell is SELL-ONLY (see the mobdrops block above).
   # ---------------------------------------------------------------
   - id: quartz
     material: QUARTZ
@@ -710,11 +746,3 @@ items:
         components:
           - { item: ender_pearl, amount: 1 }
           - { item: blaze_powder, amount: 1 }
-
-  - id: shulker_shell
-    material: SHULKER_SHELL
-    category: netherend
-    displayName: "Shulker Shell"
-    buy: 180.0
-    sell: 75.0
-    dailySellLimit: 16
